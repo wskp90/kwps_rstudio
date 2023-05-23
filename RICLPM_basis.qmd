@@ -1,10 +1,10 @@
 ---
-title: "GLES Panel 2017-2021"
-subtitle: "Wahlwerbung & Wahlabsicht"
+title: "Projektseminar"
+subtitle: "Reziprokje Effekte"
 author:
 - "Reimar ZEH"
 - "[Lehrstuhl für Kommunikationswissenschaft](https://www.kowi.rw.fau.de)"
-- "Filename: *Recode ZA6838-ZA7729*"
+- "Filename: *Recode ZA6838-v6"
 date: "`r format(Sys.time(), '%m.%d.%Y')`"
 editor: source
 toc: true
@@ -54,11 +54,9 @@ pacman::p_load(tidyverse,sjmisc,gt,gtExtras,
 ## Load Data
 
 ```{r}
-# load(paste0(Sys.getenv("FAUBOX"),"/GLES/za6838/za6838_7729.Rda"))
 # tic()
 orgdat = qread(here("data/data.qs"))
-# za6804v7 = qread(paste0(Sys.getenv("FAUBOX"),"/GLES/za6838/za6804_v7.qs"))
-source(here("ps_models.R"))
+source(here("scripts/ps_models.R"))
 # toc()
 ```
 
@@ -155,7 +153,7 @@ broom::tidy(sem.fit) %>% filter(., op =="~") %>%
   tab_style(style = cell_fill(color = "lightgreen"),
             locations = cells_body(columns = c(term,std.all), rows = p.value < 0.05)) %>%
   fmt_number(decimals = 3) %>% gt_theme_nytimes()
-cl_layout = openxlsx::read.xlsx(here("script/Clpm_t3_layout.xlsx")) %>%
+cl_layout = openxlsx::read.xlsx(here("scripts/Clpm_t3_layout.xlsx")) %>%
   mutate(across(everything(), ~rec(., rec = "-99=NA;else = copy")))
 cl_graph = prepare_graph(sem.fit, layout = cl_layout) %>% edit_graph({label_location = 0.8}, element = "edges") %>% edit_graph({ label = paste(est_sig_std)}, element="edges")
 plot(cl_graph)
@@ -176,7 +174,7 @@ broom::tidy(ric.fit) %>% filter(., op =="~") %>%
   tab_style(style = cell_fill(color = "lightgreen"),
             locations = cells_body(columns = c(term,std.all), rows = p.value < 0.05)) %>%
   fmt_number(decimals = 3) %>% gt_theme_nytimes()
-RI_layout = openxlsx::read.xlsx(here("script/RI-clpm_t3_layout.xlsx")) %>%
+RI_layout = openxlsx::read.xlsx(here("scripts/RI-clpm_t3_layout.xlsx")) %>%
   mutate(across(everything(), ~rec(., rec = "-99=NA;else = copy")))
 ric_graph = prepare_graph(ric.fit, layout = RI_layout) %>% edit_graph({label_location = 0.8}, element = "edges") %>%edit_graph({ label = paste(est_sig_std)}, element="edges")
 plot(ric_graph)
