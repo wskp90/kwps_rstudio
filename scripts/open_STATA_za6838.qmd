@@ -47,7 +47,7 @@ pacman::p_load(sjlabelled,qs,tictoc,here)
 
 ```{r}
 tic()
-za6838v6 = read_stata(paste0(Sys.getenv("FAUBOX"),"/GLES/za6838/ZA6838_allwaves_sA_v6-0-0.dta"),drop.labels = T)
+my_stata_data = read_stata(here("data/dateiname.dta"),drop.labels = T)
 toc()
 ```
 
@@ -55,5 +55,5 @@ toc()
 ## Save DATA
 
 ```{r}
-qsave(za6838v6, file = paste0(Sys.getenv("FAUBOX"),"/GLES/za6838/za6838_v6.qs"))
+qsave(my_stata_data, file = here("data/data.qs"))
 ```
